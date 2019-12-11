@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Gru 2019, 13:08
+-- Czas generowania: 11 Gru 2019, 20:14
 -- Wersja serwera: 10.4.8-MariaDB
 -- Wersja PHP: 7.3.11
 
@@ -53,7 +53,9 @@ INSERT INTO `cars` (`id`, `make`, `model`, `registration_number`, `horse_power`,
 (7, 'Isuzu', 'Oasis', 'DW12344', 171, 4, 320, NULL),
 (8, 'Oldsmobile', 'Cutlass Cruiser', 'DW07654', 70, 4, 766, NULL),
 (9, 'Saab', '9-5', 'DW35654', 159, 5, 524, NULL),
-(10, 'Volvo', 'S40', 'DW94304', 158, 4, 788, NULL);
+(10, 'Volvo', 'S40', 'DW94304', 158, 4, 788, NULL),
+(11, 'BMW', '4', 'DW439HH', 250, 5, 250, NULL),
+(14, 'BMW', '5', 'DW439AU', 350, 5, 349, NULL);
 
 -- --------------------------------------------------------
 
@@ -92,6 +94,40 @@ INSERT INTO `clients` (`id`, `username`, `password`, `firstname`, `lastname`, `p
 -- --------------------------------------------------------
 
 --
+-- Zastąpiona struktura widoku `efektywnosc`
+-- (Zobacz poniżej rzeczywisty widok)
+--
+CREATE TABLE `efektywnosc` (
+`firstname` varchar(25)
+,`lastname` varchar(25)
+,`id` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Zastąpiona struktura widoku `najlepsi_klienci`
+-- (Zobacz poniżej rzeczywisty widok)
+--
+CREATE TABLE `najlepsi_klienci` (
+`COUNT(reservations.client_id)` bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Zastąpiona struktura widoku `popularnosc`
+-- (Zobacz poniżej rzeczywisty widok)
+--
+CREATE TABLE `popularnosc` (
+`make` varchar(25)
+,`model` varchar(25)
+,`id` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `reservations`
 --
 
@@ -104,6 +140,17 @@ CREATE TABLE `reservations` (
   `end_date` datetime DEFAULT NULL,
   `total_price` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Zastąpiona struktura widoku `rezerwacje_klienta`
+-- (Zobacz poniżej rzeczywisty widok)
+--
+CREATE TABLE `rezerwacje_klienta` (
+`make` varchar(25)
+,`model` varchar(25)
+);
 
 -- --------------------------------------------------------
 
@@ -128,6 +175,42 @@ INSERT INTO `workers` (`id`, `username`, `password`, `firstname`, `lastname`, `e
 (1, 'kgobert0', '5TF33yI27UC', 'Kermy', 'Gobert', 'kgobert0@msu.edu'),
 (2, 'rbrogden1', 'YigsGx2', 'Rena', 'Brogden', 'rbrogden1@vistaprint.com'),
 (3, 'hfrayling2', 'jbGditvq', 'Hilary', 'Frayling', 'hfrayling2@cbsnews.com');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura widoku `efektywnosc`
+--
+DROP TABLE IF EXISTS `efektywnosc`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `efektywnosc`  AS  (select `w`.`firstname` AS `firstname`,`w`.`lastname` AS `lastname`,`r`.`id` AS `id` from (`workers` `w` left join `reservations` `r` on(`w`.`id` = `r`.`car_id`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura widoku `najlepsi_klienci`
+--
+DROP TABLE IF EXISTS `najlepsi_klienci`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `najlepsi_klienci`  AS  (select count(`reservations`.`client_id`) AS `COUNT(reservations.client_id)` from `reservations` group by `reservations`.`client_id`) ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura widoku `popularnosc`
+--
+DROP TABLE IF EXISTS `popularnosc`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `popularnosc`  AS  (select `c`.`make` AS `make`,`c`.`model` AS `model`,`r`.`id` AS `id` from (`cars` `c` left join `reservations` `r` on(`c`.`id` = `r`.`car_id`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura widoku `rezerwacje_klienta`
+--
+DROP TABLE IF EXISTS `rezerwacje_klienta`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `rezerwacje_klienta`  AS  (select `cars`.`make` AS `make`,`cars`.`model` AS `model` from ((`clients` join `reservations` on(`clients`.`id` = `reservations`.`client_id`)) join `cars` on(`reservations`.`car_id` = `cars`.`id`))) ;
 
 --
 -- Indeksy dla zrzutów tabel
@@ -175,7 +258,7 @@ ALTER TABLE `workers`
 -- AUTO_INCREMENT dla tabeli `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT dla tabeli `clients`
