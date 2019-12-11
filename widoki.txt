@@ -1,0 +1,7 @@
+CREATE VIEW efektywnosc AS
+(SELECT w.firstname, w.lastname, r.id FROM workers w
+LEFT JOIN reservations r ON w.id=r.car_id);
+
+CREATE VIEW popularnosc AS
+(SELECT c.make, c.model, r.id FROM cars c
+LEFT JOIN reservations r ON c.id=r.car_id);
