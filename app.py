@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, Column, Integer, Unicode, DateTime, Foreig
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import *
-
+# jp emilke
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '873641a1fe30ec2a559e69afda22fe8b'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost:3306/rentacar'
