@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, flash, redirect
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy imcmport SQLAlchemy
 from forms import RegistrationForm, LoginForm
 from datetime import datetime
 from sqlalchemy import create_engine, Column, Integer, Unicode, DateTime, ForeignKey, Boolean
@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import *
 
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = '873641a1fe30ec2a559e69afda22fe8b'
+app.config['SECRET_KEY'] = '873641a1fe30ec2a559e69afda22fe8b'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost:3306/rentacar'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy(app)
@@ -93,7 +93,7 @@ def register():
     if form.validate_on_submit():
         flash('Submitted!', 'success')
         return redirect(url_for('home'))
-    return render_template(':register.html', title='Register', form=form)
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
