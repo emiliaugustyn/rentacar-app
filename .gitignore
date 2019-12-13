@@ -1,6 +1,5 @@
 venv
 .idea
-site.db
 
 # Created by https://www.gitignore.io/api/python,pycharm,windows
 # Edit at https://www.gitignore.io/?templates=python,pycharm,windows
