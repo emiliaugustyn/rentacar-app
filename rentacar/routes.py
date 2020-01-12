@@ -1,7 +1,6 @@
 from flask import render_template, url_for, flash, redirect
 from rentacar.forms import RegistrationForm, LoginForm
 from rentacar import app
-from rentacar.models import Car, Client, Worker, Reservation
 
 @app.route('/')
 def home():

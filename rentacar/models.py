@@ -1,6 +1,6 @@
+from rentacar import *
 from datetime import datetime
 from sqlalchemy.orm import relationship
-from rentacar import *
 
 
 class Reservation(Base):
