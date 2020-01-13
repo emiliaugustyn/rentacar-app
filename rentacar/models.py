@@ -1,6 +1,12 @@
 from rentacar import *
 from datetime import datetime
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return session.query(Client).get(int(user_id))
 
 
 class Reservation(Base):
@@ -14,11 +20,11 @@ class Reservation(Base):
     total_price = Column(Integer, nullable=True)
 
 
-class Client(Base):
+class Client(Base, UserMixin):
     __tablename__ = 'clients'
     id = Column(Integer, nullable=False, autoincrement=True, primary_key=True)
     username = Column(Unicode(20), nullable=False, unique=True)
-    password = Column(Unicode(20), nullable=False, unique=True)
+    password = Column(Unicode(100), nullable=False, unique=True)
     first_name = Column(Unicode(25), nullable=True)
     last_name = Column(Unicode(25), nullable=True)
     pesel = Column(Unicode(11), nullable=False)
@@ -51,7 +57,7 @@ class Worker(Base):
     __tablename__ = 'workers'
     id = Column(Integer, nullable=False, autoincrement=True, primary_key=True)
     username = Column(Unicode(20), nullable=False, unique=True)
-    password = Column(Unicode(20), nullable=False, unique=True)
+    password = Column(Unicode(100), nullable=False, unique=True)
     first_name = Column(Unicode(25), nullable=True)
     last_name = Column(Unicode(25), nullable=True)
     email = Column(Unicode(255), nullable=False, unique=True)
