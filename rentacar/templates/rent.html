@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Choose your fighter</h1>
+    <div>
+    <table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Make</th>
+      <th scope="col">Model</th>
+      <th scope="col">Price / day</th>
+    </tr>
+  </thead>
+  <tbody>
+     {% for car in cars %}
+          <tr>
+          <th scope="row"> {{ car.id }}</th>
+          <td> {{ car.make }}</td>
+          <td> {{ car.model }}</td>
+          <td> {{ car.price_day }}</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+    </div>
+{% endblock content %}

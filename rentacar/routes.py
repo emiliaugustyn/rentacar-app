@@ -61,4 +61,13 @@ def logout():
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    reservations = session.query(Reservation, Client). \
+        filter(Client.id == Reservation.client_id). \
+        filter(Client.email == current_user.email).all()
+    return render_template('account.html', title='Account', reservations=reservations)
+
+
+@app.route('/rent', methods=['GET', 'POST'])
+def rent():
+    cars = session.query(Car).all()
+    return render_template('rent.html', cars=cars, title='Rent')
