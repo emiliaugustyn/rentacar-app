@@ -17,6 +17,16 @@
     {% endif %}
 
 <style>
+    body {
+  background-color: #F7F5F5;
+    text-align: justify;
+}
+        .navbar {
+            background-color: #70ABAF;
+        }
+        .picture{
+            text-align: center;
+        }
     .worker{
     text-align: right;
     }
@@ -55,7 +65,7 @@
     </header>
     <main role="main" class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
