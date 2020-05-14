@@ -1,5 +1,6 @@
 # Bazy-Danych-2
-elo
+
+Projekt z Baz Danych 2 V semestr
 
 ## Virtualenv HOWTO
 (Pycharm will do that for you)
